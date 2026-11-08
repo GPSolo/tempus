@@ -1,0 +1,153 @@
+name: Sync upstream
+
+on:
+  schedule:
+    - cron: '23 5 * * *'
+  workflow_dispatch:
+
+# Requirement: no paid model inference. This workflow uses NO AI models,
+# inference APIs, coding agents, or AI conflict-resolution services, even free ones.
+# Standard public-repository Linux runners only; no paid/large runners.
+permissions:
+  contents: read
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.repository == 'GPSolo/tempus' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    outputs:
+      result: ${{ steps.merge.outputs.result }}
+      verify: ${{ steps.merge.outputs.verify }}
+      revision: ${{ steps.merge.outputs.revision }}
+      upstream_revision: ${{ steps.merge.outputs.upstream_revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Test sync logic without network services
+        run: python3 -m unittest discover -s scripts/tests -v
+      - name: Merge upstream into the dedicated sync branch
+        id: merge
+        env:
+          FORCE_VERIFY: ${{ github.event_name == 'workflow_dispatch' }}
+        run: bash scripts/prepare-upstream-sync.sh
+
+  verify:
+    needs: prepare
+    if: needs.prepare.outputs.verify == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the exact merged revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build and test the merged branch, both flavors
+        run: |
+          bash ./gradlew --no-daemon \
+            :app:assembleTempusDebug :app:assembleDegoogledDebug \
+            :app:testTempusDebugUnitTest :app:testDegoogledDebugUnitTest
+      - name: Save test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-sync-test-reports
+          path: |
+            app/build/test-results/
+            app/build/reports/tests/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  report:
+    needs: [prepare, verify]
+    if: always() && github.repository == 'GPSolo/tempus' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # No merged code is executed in this job, which has the PR/issue write token.
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PREPARE_RESULT: ${{ needs.prepare.result }}
+      MERGE_RESULT: ${{ needs.prepare.outputs.result }}
+      VERIFY_RESULT: ${{ needs.verify.result }}
+      REVISION: ${{ needs.prepare.outputs.revision }}
+      UPSTREAM_REVISION: ${{ needs.prepare.outputs.upstream_revision }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Publish review PR or report failure
+        shell: bash
+        run: |
+          set -euo pipefail
+          title='Upstream sync needs attention'
+          issue="$(gh issue list --state open --search "$title in:title" --json number,title \
+            --jq '.[] | select(.title == "Upstream sync needs attention") | .number' | head -n1)"
+
+          if [[ "$MERGE_RESULT" == noop || "$MERGE_RESULT" == unchanged && "$VERIFY_RESULT" == skipped ]]; then
+            echo 'No new revision to verify.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          pr="$(gh pr list --state open --base main --head automation/upstream-sync \
+            --json number --jq '.[0].number // empty')"
+          if [[ "$PREPARE_RESULT" != success || "$MERGE_RESULT" == conflict || "$VERIFY_RESULT" != success ]]; then
+            body="Automatic upstream sync needs manual attention. Preparation: $PREPARE_RESULT; merge: $MERGE_RESULT; verification: $VERIFY_RESULT. See $RUN_URL. No changes were made to main. Conflicts are never resolved using AI models or by overwriting fork changes."
+            if [[ -n "$pr" ]]; then
+              gh pr ready "$pr" --undo || true
+              gh pr edit "$pr" --body "$body"
+            fi
+            if [[ -n "$issue" ]]; then
+              gh issue edit "$issue" --body "$body"
+            else
+              gh issue create --title "$title" --body "$body"
+            fi
+            echo "$body" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+          body="$(cat <<EOF
+          Merges eddyizm/tempus main ($UPSTREAM_REVISION) while preserving this fork's commits.
+
+          Verified merged revision: $REVISION
+
+          - Tempus and Degoogled debug builds and unit tests passed.
+          - Only the merged sync revision was tested, not each upstream commit.
+          - Manual review and on-device queue gesture verification are still required.
+          - No AI models, inference APIs, or paid AI services were used.
+          - This PR is not automatically approved or merged. main is never force-pushed.
+
+          Verification run: $RUN_URL
+          EOF
+          )"
+          if [[ -n "$pr" ]]; then
+            gh pr edit "$pr" --title 'Sync upstream main' --body "$body"
+            draft="$(gh pr view "$pr" --json isDraft --jq .isDraft)"
+            if [[ "$draft" == true ]]; then gh pr ready "$pr"; fi
+          else
+            gh pr create --base main --head automation/upstream-sync \
+              --title 'Sync upstream main' --body "$body"
+          fi
+          if [[ -n "$issue" ]]; then
+            gh issue close "$issue" --comment "Sync verified successfully: $RUN_URL"
+          fi
+          echo "$body" >> "$GITHUB_STEP_SUMMARY"

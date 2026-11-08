@@ -26,3 +26,4 @@ app/degoogled/
 app/play/
 .agents/
 .kotlin
+/scripts/tests/__pycache__/

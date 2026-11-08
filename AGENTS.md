@@ -12,6 +12,13 @@ The debug-login hook now uses `tasks.configureEach` (AGP removed `applicationVar
 and supports the upstream `play` flavor as well. FIFO preservation is local; LAN remote
 queue commands retain upstream ordering and protocol. See `UPSTREAM_INTEGRATION.md`.
 
+Automatic upstream syncing is owner-approved and implemented in
+`.github/workflows/upstream-sync.yml`: daily/manual review PRs, merged-revision
+builds/tests for both flavors, no force-pushes or automatic merges. **No paid model
+inference is permitted; the implementation invokes no AI models at all.** Never add
+model-based conflict resolution without fresh owner approval. See
+`UPSTREAM_INTEGRATION.md` for operation and retry instructions.
+
 # AGENTS.md — Tempo codebase orientation (for AI agents)
 
 This file is a handoff for any model (or human) working on this repo. It documents **uncommitted
