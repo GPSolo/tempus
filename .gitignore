@@ -27,3 +27,4 @@ app/play/
 .agents/
 .kotlin
 /scripts/tests/__pycache__/
+/scripts/__pycache__/

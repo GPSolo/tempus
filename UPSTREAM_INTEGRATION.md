@@ -66,3 +66,6 @@ Linux GitHub-hosted runners, which are free for this public repository under Git
 current Actions policy; no larger/paid runners or external paid services are configured.
 GitHub may disable scheduled workflows after 60 days of repository inactivity; check
 the Actions page and re-enable the workflow if needed.
+
+After a reviewed sync reaches `main`, stable queue-enabled fork releases are handled
+separately by `.github/workflows/fork-release.yml`; see `FORK_RELEASES.md`.

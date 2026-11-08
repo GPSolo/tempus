@@ -1,0 +1,164 @@
+name: Fork stable release
+
+on:
+  schedule:
+    - cron: '53 6 * * *'
+  workflow_dispatch:
+
+# No AI models, inference APIs, paid runners, or automatic upstream merges.
+permissions:
+  contents: read
+
+concurrency:
+  group: fork-stable-release
+  cancel-in-progress: false
+
+jobs:
+  select:
+    if: github.repository == 'GPSolo/tempus' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      publish: ${{ steps.select.outputs.publish }}
+      tag: ${{ steps.select.outputs.tag }}
+      revision: ${{ steps.select.outputs.revision }}
+      upstream_sha: ${{ steps.select.outputs.upstream_sha }}
+      upstream_tag: ${{ steps.select.outputs.upstream_tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Test automation logic
+        run: python3 -m unittest discover -s scripts/tests -v
+      - name: Select an integrated stable release
+        id: select
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/eddyizm/tempus/releases/latest > upstream-release.json
+          gh api --paginate --slurp repos/GPSolo/tempus/releases > fork-releases.json
+          python3 scripts/prepare-fork-release.py
+
+  build:
+    needs: select
+    if: needs.select.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.select.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Test both flavors and build release APKs
+        run: |
+          bash ./gradlew --no-daemon \
+            :app:testTempusDebugUnitTest :app:testDegoogledDebugUnitTest \
+            :app:assembleTempusRelease :app:assembleDegoogledRelease
+      - name: Collect universal APKs and deobfuscation mappings
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir release-artifacts
+          for flavor in tempus degoogled; do
+            mapfile -t apks < <(find "app/build/outputs/apk/$flavor/release" -type f -name '*.apk')
+            if [[ "${#apks[@]}" != 1 ]]; then
+              echo "Expected one universal APK for $flavor; refusing ambiguous artifacts." >&2
+              exit 1
+            fi
+            cp "${apks[0]}" "release-artifacts/$flavor-unsigned.apk"
+            gzip -c "app/build/outputs/mapping/${flavor}Release/mapping.txt" > "release-artifacts/mapping-$flavor.txt.gz"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fork-unsigned-release
+          path: release-artifacts/
+          retention-days: 1
+      - name: Save test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fork-release-tests
+          path: app/build/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  publish:
+    needs: [select, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    # No source checkout or Gradle execution in the job holding signing secrets.
+    env:
+      FORK_TAG: ${{ needs.select.outputs.tag }}
+      REVISION: ${{ needs.select.outputs.revision }}
+      UPSTREAM_TAG: ${{ needs.select.outputs.upstream_tag }}
+      UPSTREAM_SHA: ${{ needs.select.outputs.upstream_sha }}
+    steps:
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - uses: actions/download-artifact@v4
+        with:
+          name: fork-unsigned-release
+          path: unsigned
+      - name: Sign and verify both APKs
+        shell: bash
+        env:
+          KEYSTORE_BASE64: ${{ secrets.FORK_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.FORK_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.FORK_KEY_ALIAS }}
+        run: |
+          set -euo pipefail
+          : "${KEYSTORE_BASE64:?Missing fork signing key}"
+          : "${KEYSTORE_PASSWORD:?Missing fork signing password}"
+          : "${KEY_ALIAS:?Missing fork signing alias}"
+          key="$RUNNER_TEMP/fork-release.p12"
+          trap 'rm -f "$key"' EXIT
+          umask 077
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$key"
+          sdkmanager 'build-tools;36.1.0'
+          tools="$ANDROID_HOME/build-tools/36.1.0"
+          mkdir signed
+          for flavor in tempus degoogled; do
+            "$tools/zipalign" -p -f 4 "unsigned/$flavor-unsigned.apk" "$RUNNER_TEMP/$flavor-aligned.apk"
+            "$tools/apksigner" sign --ks "$key" --ks-key-alias "$KEY_ALIAS" \
+              --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEYSTORE_PASSWORD \
+              --out "signed/$flavor-$FORK_TAG.apk" "$RUNNER_TEMP/$flavor-aligned.apk"
+            "$tools/apksigner" verify --verbose --print-certs "signed/$flavor-$FORK_TAG.apk"
+            cp "unsigned/mapping-$flavor.txt.gz" signed/
+          done
+          cd signed
+          sha256sum ./*.apk ./*.gz > SHA256SUMS
+      - name: Publish the fork release without moving existing tags
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: GPSolo/tempus
+        run: |
+          set -euo pipefail
+          # Existing releases are immutable; fail rather than silently replace assets.
+          cat > notes.md <<EOF
+          Stable fork build of [upstream $UPSTREAM_TAG](https://github.com/eddyizm/tempus/releases/tag/$UPSTREAM_TAG), with GPSolo's queue changes.
+
+          - Preserves explicit Play Next order when enabled; adds swipe-to-play-next.
+          - Both Tempus and Degoogled unit tests and release builds passed.
+          - Built from fork commit $REVISION, containing upstream commit $UPSTREAM_SHA.
+          - Signed with the dedicated GPSolo fork key. Future fork releases use the same key.
+          - **Not signed by upstream:** uninstall the upstream app before installing this fork (back up your settings first). Existing fork installations using this signing key can update normally.
+          - No AI models or paid inference services are used by this automation.
+
+          APKs are universal. SHA256SUMS and R8 mappings are included. Queue UI gestures still require manual on-device verification.
+          EOF
+          gh release create "$FORK_TAG" signed/*.apk signed/*.gz signed/SHA256SUMS \
+            --target "$REVISION" --title "$FORK_TAG — GPSolo queue build" --notes-file notes.md

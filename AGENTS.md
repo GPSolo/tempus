@@ -19,6 +19,12 @@ inference is permitted; the implementation invokes no AI models at all.** Never 
 model-based conflict resolution without fresh owner approval. See
 `UPSTREAM_INTEGRATION.md` for operation and retry instructions.
 
+Owner-approved fork releases follow stable upstream versions with `-queue` tags,
+preserving existing tags. `.github/workflows/fork-release.yml` builds reviewed fork
+`main` including queue changes, checks upstream ancestry/version metadata, tests both
+flavors, and signs using dedicated fork secrets in an isolated job. No model calls.
+See `FORK_RELEASES.md`; never rotate or overwrite the fork signing key casually.
+
 # AGENTS.md — Tempo codebase orientation (for AI agents)
 
 This file is a handoff for any model (or human) working on this repo. It documents **uncommitted
