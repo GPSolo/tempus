@@ -99,15 +99,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          title='Upstream sync needs attention'
-          issue="$(gh issue list --state open --search "$title in:title" --json number,title \
-            --jq '.[] | select(.title == "Upstream sync needs attention") | .number' | head -n1)"
-
           if [[ "$MERGE_RESULT" == noop || "$MERGE_RESULT" == unchanged && "$VERIFY_RESULT" == skipped ]]; then
             echo 'No new revision to verify.' >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
 
+          title='Upstream sync needs attention'
+          issue="$(gh issue list --state open --search "$title in:title" --json number,title \
+            --jq '.[] | select(.title == "Upstream sync needs attention") | .number' | head -n1)"
           pr="$(gh pr list --state open --base main --head automation/upstream-sync \
             --json number --jq '.[0].number // empty')"
           if [[ "$PREPARE_RESULT" != success || "$MERGE_RESULT" == conflict || "$VERIFY_RESULT" != success ]]; then

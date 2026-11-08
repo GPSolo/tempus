@@ -49,6 +49,7 @@ Owner-approved workflow: `.github/workflows/upstream-sync.yml`.
 - A successful check opens or updates one review PR. Merge/build failures create or
   update one **Upstream sync needs attention** issue. An existing PR becomes draft
   on failure; resolving conflicts requires a human. Retry manually after fixing it.
+  GitHub Issues must remain enabled on the fork for these failure reports.
 - Build jobs have a read-only token with persisted Git credentials disabled. PR/issue
   reporting runs separately, without checking out or executing the merged code.
 - Uses `GITHUB_TOKEN`, not a personal access token. GitHub's **Allow GitHub Actions
