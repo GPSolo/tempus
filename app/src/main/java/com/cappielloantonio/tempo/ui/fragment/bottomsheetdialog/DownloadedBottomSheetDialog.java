@@ -103,7 +103,7 @@ public class DownloadedBottomSheetDialog extends BottomSheetDialogFragment imple
 
         TextView playNext = view.findViewById(R.id.play_next_text_view);
         playNext.setOnClickListener(v -> {
-            MediaManager.enqueue(mediaBrowserListenableFuture, songs, true);
+            MediaManager.enqueue(mediaBrowserListenableFuture, songs, true, true);
             ((MainActivity) requireActivity()).setBottomSheetInPeek(true);
 
             dismissBottomSheet();

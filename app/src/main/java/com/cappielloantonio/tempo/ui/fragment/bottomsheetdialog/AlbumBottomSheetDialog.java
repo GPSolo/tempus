@@ -165,7 +165,7 @@ public class AlbumBottomSheetDialog extends BottomSheetDialogFragment implements
 
         TextView playNext = view.findViewById(R.id.play_next_text_view);
         playNext.setOnClickListener(v -> albumBottomSheetViewModel.getAlbumTracks().observe(getViewLifecycleOwner(), songs -> {
-            MediaManager.enqueue(mediaBrowserListenableFuture, songs, true);
+            MediaManager.enqueue(mediaBrowserListenableFuture, songs, true, true);
             ((MainActivity) requireActivity()).setBottomSheetInPeek(true);
 
             dismissBottomSheet();

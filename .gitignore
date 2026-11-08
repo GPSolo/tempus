@@ -2,6 +2,7 @@ graphify-out/
 *.iml
 .gradle
 /local.properties
+/debug-server.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml

@@ -66,6 +66,10 @@ public class MusicDirectoryAdapter extends RecyclerView.Adapter<MusicDirectoryAd
         notifyDataSetChanged();
     }
 
+    public Child getItem(int position) {
+        return children.get(position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ItemLibraryMusicDirectoryBinding item;
 

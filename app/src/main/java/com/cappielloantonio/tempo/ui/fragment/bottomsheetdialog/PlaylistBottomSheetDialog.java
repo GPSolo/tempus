@@ -79,7 +79,7 @@ public class PlaylistBottomSheetDialog extends BottomSheetDialogFragment impleme
 
         TextView playNext = view.findViewById(R.id.play_next_text_view);
         playNext.setOnClickListener(v -> {
-            MediaManager.enqueue(mediaBrowserListenableFuture, playlist.getEntries(), true);
+            MediaManager.enqueue(mediaBrowserListenableFuture, playlist.getEntries(), true, true);
             ((MainActivity) requireActivity()).setBottomSheetInPeek(true);
             dismissBottomSheet();
         });

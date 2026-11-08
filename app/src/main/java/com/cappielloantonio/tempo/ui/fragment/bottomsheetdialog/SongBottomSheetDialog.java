@@ -178,7 +178,7 @@ public class SongBottomSheetDialog extends BottomSheetDialogFragment implements 
 
         TextView playNext = view.findViewById(R.id.play_next_text_view);
         playNext.setOnClickListener(v -> {
-            MediaManager.enqueue(mediaBrowserListenableFuture, song, true);
+            MediaManager.enqueue(mediaBrowserListenableFuture, song, true, true);
             ((MainActivity) requireActivity()).setBottomSheetInPeek(true);
             dismissBottomSheet();
         });

@@ -83,6 +83,29 @@ android {
     }
 }
 
+// After installing a debug build, seed the saved server/login from debug-server.properties
+// (see scripts/seed-debug-login.sh) so a fresh install skips the login screen.
+android.applicationVariants.all { variant ->
+    if (variant.buildType.name == 'debug') {
+        def installTask = tasks.findByName("install${variant.name.capitalize()}")
+        if (installTask != null) {
+            installTask.doLast {
+                def pb = new ProcessBuilder(
+                    rootProject.file('scripts/seed-debug-login.sh').absolutePath,
+                    variant.flavorName.toLowerCase()
+                )
+                pb.redirectErrorStream(true)
+                def proc = pb.start()
+                proc.inputStream.text.eachLine { line -> logger.lifecycle(line) }
+                def code = proc.waitFor()
+                if (code != 0) {
+                    throw new GradleException("seed-debug-login.sh failed with exit code $code")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation files('../libs/lib-decoder-ffmpeg-release.aar')
 

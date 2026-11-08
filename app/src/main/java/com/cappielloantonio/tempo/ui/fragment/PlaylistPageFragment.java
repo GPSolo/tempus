@@ -47,6 +47,7 @@ import com.cappielloantonio.tempo.util.MappingUtil;
 import com.cappielloantonio.tempo.util.MusicUtil;
 import com.cappielloantonio.tempo.util.ExternalAudioWriter;
 import com.cappielloantonio.tempo.util.Preferences;
+import com.cappielloantonio.tempo.util.PlayNextSwipeHelper;
 import com.cappielloantonio.tempo.viewmodel.PlaybackViewModel;
 import com.cappielloantonio.tempo.viewmodel.PlaylistPageViewModel;
 import com.cappielloantonio.tempo.ui.dialog.PlaylistEditorDialog;
@@ -448,6 +449,7 @@ public class PlaylistPageFragment extends Fragment implements ClickCallback {
 
         songHorizontalAdapter = new SongHorizontalAdapter(getViewLifecycleOwner(), this, true, false, null);
         bind.songRecyclerView.setAdapter(songHorizontalAdapter);
+        PlayNextSwipeHelper.attach(bind.songRecyclerView, () -> mediaBrowserListenableFuture, songHorizontalAdapter::getItem);
         setMediaBrowserListenableFuture();
         reapplyPlayback();
 

@@ -1,0 +1,10 @@
+# Copy to debug-server.properties and fill in your Subsonic server details.
+# The values are written into the debug app's shared preferences after install,
+# so you don't have to type them on the phone every time you reinstall.
+# This file is gitignored — never commit real credentials.
+
+server=https://subsonic.example.com:4533
+user=yourusername
+password=yourpassword
+# Optional: stable id used for streaming-cache keys. Omit for a random UUID.
+# server_id=

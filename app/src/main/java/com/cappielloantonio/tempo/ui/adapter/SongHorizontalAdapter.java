@@ -327,6 +327,7 @@ public class SongHorizontalAdapter extends RecyclerView.Adapter<SongHorizontalAd
     }
 
     public Child getItem(int id) {
+        if (id < 0 || id >= differ.getCurrentList().size()) return null;
         return differ.getCurrentList().get(id);
     }
 

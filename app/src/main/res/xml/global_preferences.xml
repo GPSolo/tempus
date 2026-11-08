@@ -249,6 +249,12 @@
             android:summary="@string/settings_fallback_to_random_tracks_summary"
             android:key="fallback_to_random_tracks" />
 
+        <SwitchPreference
+            android:title="@string/settings_preserve_play_next_order_title"
+            android:defaultValue="false"
+            android:summary="@string/settings_preserve_play_next_order_summary"
+            android:key="preserve_play_next_order" />
+
         <ListPreference
             app:defaultValue="[heartID]"
             app:dialogTitle="@string/settings_custom_command_first_button"

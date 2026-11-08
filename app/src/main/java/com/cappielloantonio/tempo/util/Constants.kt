@@ -145,6 +145,11 @@ object Constants {
     const val PLAY_NEXT_INSERT_POS = "play_next_insert_pos"
     const val PLAY_NEXT_COUNT = "play_next_count"
     const val PLAY_NEXT_TARGET_COUNT = "play_next_target_count"
+    // When "Preserve Play Next order" is enabled, new Play Next items are appended after the
+    // existing Play Next block (instead of jumping ahead of it). The client reports the block
+    // so the service can splice new items after it in shuffle order too.
+    const val PLAY_NEXT_PRESERVE_ORDER = "play_next_preserve_order"
+    const val PLAY_NEXT_BLOCK_LENGTH = "play_next_block_length"
 
     enum class SeedType {
         ARTIST, ALBUM, TRACK

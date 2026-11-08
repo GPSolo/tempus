@@ -33,6 +33,7 @@ import com.cappielloantonio.tempo.ui.adapter.ArtistAdapter;
 import com.cappielloantonio.tempo.ui.adapter.SongHorizontalAdapter;
 import com.cappielloantonio.tempo.ui.adapter.PlaylistHorizontalAdapter;
 import com.cappielloantonio.tempo.util.Constants;
+import com.cappielloantonio.tempo.util.PlayNextSwipeHelper;
 import com.cappielloantonio.tempo.viewmodel.PlaybackViewModel;
 import com.cappielloantonio.tempo.viewmodel.SearchViewModel;
 import com.cappielloantonio.tempo.subsonic.models.PlaylistWithSongs;
@@ -131,6 +132,7 @@ public class SearchFragment extends Fragment implements ClickCallback {
         reapplyPlayback();
 
         bind.searchResultTracksRecyclerView.setAdapter(songHorizontalAdapter);
+        PlayNextSwipeHelper.attach(bind.searchResultTracksRecyclerView, () -> mediaBrowserListenableFuture, songHorizontalAdapter::getItem);
 
         bind.allsongsview.setLayoutManager(new LinearLayoutManager(requireContext()));
         bind.allsongsview.setHasFixedSize(true);

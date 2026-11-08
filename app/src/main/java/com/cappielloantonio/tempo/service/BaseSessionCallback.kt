@@ -419,7 +419,9 @@ open class BaseSessionCallback(
                 service.requestPlayNextFixup(
                     args.getInt(Constants.PLAY_NEXT_INSERT_POS, -1),
                     args.getInt(Constants.PLAY_NEXT_COUNT, 0),
-                    args.getInt(Constants.PLAY_NEXT_TARGET_COUNT, -1)
+                    args.getInt(Constants.PLAY_NEXT_TARGET_COUNT, -1),
+                    args.getBoolean(Constants.PLAY_NEXT_PRESERVE_ORDER, false),
+                    args.getInt(Constants.PLAY_NEXT_BLOCK_LENGTH, 0)
                 )
                 Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))
             }

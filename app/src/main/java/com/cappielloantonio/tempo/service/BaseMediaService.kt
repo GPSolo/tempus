@@ -171,15 +171,29 @@ open class BaseMediaService : MediaLibraryService() {
         }, MoreExecutors.directExecutor())
     }
 
-    // "Play next" under shuffle: the UI inserts items at current+1 on the timeline and asks
-    // the service to splice them into shuffle position current+1. Inserts land asynchronously,
-    // so requests are queued and applied from onTimelineChanged once each target count is visible.
-    private data class PlayNextRequest(val insertPos: Int, val count: Int, val target: Int)
+    // "Play next" under shuffle: the UI inserts items on the timeline and asks
+    // the service to splice them into shuffle position after the current item (or after the
+    // existing "Play Next" block when "Preserve Play Next order" is enabled). Inserts land
+    // asynchronously, so requests are queued and applied from onTimelineChanged once each
+    // target count is visible.
+    private data class PlayNextRequest(
+        val insertPos: Int,
+        val count: Int,
+        val target: Int,
+        val preserveOrder: Boolean = false,
+        val blockLengthBefore: Int = 0
+    )
     private val playNextQueue = ArrayDeque<PlayNextRequest>()
 
-    fun requestPlayNextFixup(insertPos: Int, count: Int, target: Int) {
+    fun requestPlayNextFixup(
+        insertPos: Int,
+        count: Int,
+        target: Int,
+        preserveOrder: Boolean = false,
+        blockLengthBefore: Int = 0
+    ) {
         if (insertPos < 0 || count <= 0 || target < 0) return
-        playNextQueue.addLast(PlayNextRequest(insertPos, count, target))
+        playNextQueue.addLast(PlayNextRequest(insertPos, count, target, preserveOrder, blockLengthBefore))
         tryApplyPlayNextFixup()
     }
 
@@ -202,7 +216,8 @@ open class BaseMediaService : MediaLibraryService() {
                 continue
             }
 
-            // Build the current shuffle order minus the new items, then splice them in after current.
+            // Build the current shuffle order minus the new items, then splice them in after
+            // the current item (or after the existing Play Next block when preserving order).
             val timeline = player.currentTimeline
             val base = ArrayList<Int>(req.target)
             var w = timeline.getFirstWindowIndex(true)
@@ -218,11 +233,25 @@ open class BaseMediaService : MediaLibraryService() {
 
             val newOrder = ArrayList<Int>(req.target)
             newOrder.addAll(base)
+            // The Play Next block sits at timeline positions [insertPos - blockLengthBefore,
+            // insertPos). When preserving order, place the new items after the last block item
+            // in the shuffle order so consecutive Play Next items keep their FIFO order.
+            val spliceAfter = if (req.preserveOrder && req.blockLengthBefore > 0) {
+                val blockStart = req.insertPos - req.blockLengthBefore
+                val blockEnd = req.insertPos
+                var lastBlockIdx = curPos
+                for ((shuffleIdx, window) in newOrder.withIndex()) {
+                    if (window in blockStart until blockEnd) lastBlockIdx = shuffleIdx
+                }
+                lastBlockIdx
+            } else {
+                curPos
+            }
             for (j in 0 until req.count) {
-                newOrder.add(curPos + 1 + j, req.insertPos + j)
+                newOrder.add(spliceAfter + 1 + j, req.insertPos + j)
             }
             player.shuffleOrder = DefaultShuffleOrder(newOrder.toIntArray(), Random.nextLong())
-            Log.d(TAG, "playNextFixup: ${req.count} item(s) moved to shuffle position ${curPos + 1}")
+            Log.d(TAG, "playNextFixup: ${req.count} item(s) moved to shuffle position ${spliceAfter + 1}")
             playNextQueue.removeFirst()
         }
     }

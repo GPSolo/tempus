@@ -37,6 +37,7 @@ import com.cappielloantonio.tempo.subsonic.models.Child;
 import com.cappielloantonio.tempo.ui.activity.MainActivity;
 import com.cappielloantonio.tempo.ui.adapter.SongHorizontalAdapter;
 import com.cappielloantonio.tempo.util.Constants;
+import com.cappielloantonio.tempo.util.PlayNextSwipeHelper;
 import com.cappielloantonio.tempo.viewmodel.PlaybackViewModel;
 import com.cappielloantonio.tempo.viewmodel.SongListPageViewModel;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -211,6 +212,7 @@ public class SongListPageFragment extends Fragment implements ClickCallback {
 
         songHorizontalAdapter = new SongHorizontalAdapter(getViewLifecycleOwner(), this, true, false, null);
         bind.songListRecyclerView.setAdapter(songHorizontalAdapter);
+        PlayNextSwipeHelper.attach(bind.songListRecyclerView, () -> mediaBrowserListenableFuture, songHorizontalAdapter::getItem);
         setMediaBrowserListenableFuture();
         reapplyPlayback();
         songListPageViewModel.getSongList().observe(getViewLifecycleOwner(), songs -> {

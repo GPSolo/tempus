@@ -68,6 +68,7 @@ import com.cappielloantonio.tempo.util.LiveDataUtils;
 import com.cappielloantonio.tempo.util.MappingUtil;
 import com.cappielloantonio.tempo.util.MusicUtil;
 import com.cappielloantonio.tempo.util.Preferences;
+import com.cappielloantonio.tempo.util.PlayNextSwipeHelper;
 import com.cappielloantonio.tempo.util.TileSizeManager;
 import com.cappielloantonio.tempo.util.UIUtil;
 import com.cappielloantonio.tempo.viewmodel.HomeViewModel;
@@ -789,6 +790,7 @@ public class HomeTabMusicFragment extends Fragment implements ClickCallback {
 
         topSongAdapter = new SongHorizontalAdapter(getViewLifecycleOwner(), this, true, false, null);
         bind.topSongsRecyclerView.setAdapter(topSongAdapter);
+        PlayNextSwipeHelper.attach(bind.topSongsRecyclerView, () -> mediaBrowserListenableFuture, topSongAdapter::getItem);
         setTopSongsMediaBrowserListenableFuture();
         reapplyTopSongsPlayback();
         homeViewModel.getChronologySample(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), chronologies -> {
@@ -830,6 +832,7 @@ public class HomeTabMusicFragment extends Fragment implements ClickCallback {
 
         starredSongAdapter = new SongHorizontalAdapter(getViewLifecycleOwner(), this, true, false, null);
         bind.starredTracksRecyclerView.setAdapter(starredSongAdapter);
+        PlayNextSwipeHelper.attach(bind.starredTracksRecyclerView, () -> mediaBrowserListenableFuture, starredSongAdapter::getItem);
         setStarredSongsMediaBrowserListenableFuture();
         reapplyStarredSongsPlayback();
         homeViewModel.getStarredTracks(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), songs -> {

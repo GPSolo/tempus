@@ -91,6 +91,7 @@ object Preferences {
     private const val CONTINUOUS_PLAY = "continuous_play"
     private const val NUMBER_TRACKS_KEEP_IN_QUEUE = "number_tracks_keep_in_queue"
     private const val FALLBACK_TO_RANDOM_TRACKS = "fallback_to_random_tracks"
+    private const val PRESERVE_PLAY_NEXT_ORDER = "preserve_play_next_order"
     private const val LAST_INSTANT_MIX = "last_instant_mix"
     private const val ALLOW_PLAYLIST_DUPLICATES = "allow_playlist_duplicates"
     private const val HOME_SORT_PLAYLISTS = "home_sort_playlists"
@@ -824,6 +825,11 @@ object Preferences {
         App.getInstance().preferences.edit()
             .putBoolean(FALLBACK_TO_RANDOM_TRACKS, enabled)
             .apply()
+    }
+
+    @JvmStatic
+    fun isPreservePlayNextOrderEnabled(): Boolean {
+        return App.getInstance().preferences.getBoolean(PRESERVE_PLAY_NEXT_ORDER, false)
     }
 
     @JvmStatic

@@ -1,6 +1,8 @@
 package com.cappielloantonio.tempo.ui.fragment;
 
 import android.content.ComponentName;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -38,6 +40,7 @@ import com.cappielloantonio.tempo.util.DownloadUtil;
 import com.cappielloantonio.tempo.util.ExternalAudioReader;
 import com.cappielloantonio.tempo.util.ExternalAudioWriter;
 import com.cappielloantonio.tempo.util.MappingUtil;
+import com.cappielloantonio.tempo.util.PlayNextSwipeHelper;
 import com.cappielloantonio.tempo.util.Preferences;
 import com.cappielloantonio.tempo.viewmodel.PlaybackViewModel;
 import com.cappielloantonio.tempo.viewmodel.PlayerBottomSheetViewModel;
@@ -188,7 +191,7 @@ public class PlayerQueueFragment extends Fragment implements ClickCallback {
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             int originalPosition = -1;
             int fromPosition = -1;
             int toPosition = -1;
@@ -221,8 +224,35 @@ public class PlayerQueueFragment extends Fragment implements ClickCallback {
             }
 
             @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    int background;
+                    Drawable icon;
+                    if (dX > 0) {
+                        background = R.color.swipeQueueBackground;
+                        icon = androidx.core.content.ContextCompat.getDrawable(viewHolder.itemView.getContext(), R.drawable.ic_queue_white);
+                    } else {
+                        background = R.color.swipeRemoveBackground;
+                        icon = androidx.core.content.ContextCompat.getDrawable(viewHolder.itemView.getContext(), R.drawable.ic_close_white);
+                    }
+                    PlayNextSwipeHelper.drawSwipeAction(c, viewHolder, dX,
+                            androidx.core.content.ContextCompat.getColor(viewHolder.itemView.getContext(), background), icon);
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+
+            @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                MediaManager.remove(mediaBrowserListenableFuture, playerSongQueueAdapter.getItems(), viewHolder.getBindingAdapterPosition());
+                int position = viewHolder.getBindingAdapterPosition();
+                List<Child> items = playerSongQueueAdapter.getItems();
+
+                if (direction == ItemTouchHelper.RIGHT) {
+                    if (position >= 0 && position < items.size()) {
+                        MediaManager.enqueue(mediaBrowserListenableFuture, items.get(position), true, true);
+                    }
+                } else {
+                    MediaManager.remove(mediaBrowserListenableFuture, items, position);
+                }
                 viewHolder.getBindingAdapter().notifyDataSetChanged();
             }
         }).attachToRecyclerView(bind.playerQueueRecyclerView);

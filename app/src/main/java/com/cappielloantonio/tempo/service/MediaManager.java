@@ -58,6 +58,40 @@ public class MediaManager {
 
     private static final ExecutorService backgroundExecutor = Executors.newSingleThreadExecutor();
 
+    // "Preserve Play Next order": consecutive Play Next inserts form a contiguous block right
+    // after the current item. New Play Next items are appended after this block instead of
+    // jumping ahead of it (Spotify-style). The block is anchored to the current media item
+    // index and is reset when the current item changes or the queue is manually edited.
+    private static int playNextAnchorIndex = -1;
+    private static int playNextBlockLength = 0;
+
+    private static void resetPlayNextBlock() {
+        playNextAnchorIndex = -1;
+        playNextBlockLength = 0;
+    }
+
+    private static int computePlayNextInsertPos(MediaBrowser browser, int count, boolean preserveOrder) {
+        int current = browser.getCurrentMediaItemIndex();
+        if (current == C.INDEX_UNSET) {
+            resetPlayNextBlock();
+            return 0;
+        }
+
+        if (!preserveOrder) {
+            resetPlayNextBlock();
+            return current + 1;
+        }
+
+        if (playNextAnchorIndex != current) {
+            playNextAnchorIndex = current;
+            playNextBlockLength = 0;
+        }
+
+        int insertPos = current + playNextBlockLength + 1;
+        playNextBlockLength += count;
+        return insertPos;
+    }
+
     public static void registerPlaybackObserver(
             ListenableFuture<MediaBrowser> browserFuture,
             PlaybackViewModel playbackViewModel
@@ -326,6 +360,10 @@ public class MediaManager {
     }
 
     public static void enqueue(ListenableFuture<MediaBrowser> mediaBrowserListenableFuture, List<Child> media, boolean playImmediatelyAfter) {
+        enqueue(mediaBrowserListenableFuture, media, playImmediatelyAfter, false);
+    }
+
+    public static void enqueue(ListenableFuture<MediaBrowser> mediaBrowserListenableFuture, List<Child> media, boolean playImmediatelyAfter, boolean preservePlayNextOrder) {
         if (mediaBrowserListenableFuture != null) {
             mediaBrowserListenableFuture.addListener(() -> {
                 try {
@@ -334,8 +372,11 @@ public class MediaManager {
                         MediaBrowser browser = mediaBrowserListenableFuture.get();
                         int current = browser.getCurrentMediaItemIndex();
                         if (playImmediatelyAfter && current != C.INDEX_UNSET) {
-                            enqueueDatabase(media, false, current + 1);
-                            insertPlayNext(browser, MappingUtil.mapMediaItems(media));
+                            boolean preserveOrder = preservePlayNextOrder && Preferences.isPreservePlayNextOrderEnabled();
+                            int blockLengthBefore = preserveOrder ? playNextBlockLength : 0;
+                            int insertPos = computePlayNextInsertPos(browser, media.size(), preserveOrder);
+                            enqueueDatabase(media, false, insertPos);
+                            insertPlayNext(browser, MappingUtil.mapMediaItems(media), insertPos, blockLengthBefore, preserveOrder);
                         } else {
                             enqueueDatabase(media, false, mediaBrowserListenableFuture.get().getMediaItemCount());
                             mediaBrowserListenableFuture.get().addMediaItems(MappingUtil.mapMediaItems(media));
@@ -349,6 +390,10 @@ public class MediaManager {
     }
 
     public static void enqueue(ListenableFuture<MediaBrowser> mediaBrowserListenableFuture, Child media, boolean playImmediatelyAfter) {
+        enqueue(mediaBrowserListenableFuture, media, playImmediatelyAfter, false);
+    }
+
+    public static void enqueue(ListenableFuture<MediaBrowser> mediaBrowserListenableFuture, Child media, boolean playImmediatelyAfter, boolean preservePlayNextOrder) {
         if (mediaBrowserListenableFuture != null) {
             mediaBrowserListenableFuture.addListener(() -> {
                 try {
@@ -357,8 +402,11 @@ public class MediaManager {
                         MediaBrowser browser = mediaBrowserListenableFuture.get();
                         int current = browser.getCurrentMediaItemIndex();
                         if (playImmediatelyAfter && current != C.INDEX_UNSET) {
-                            enqueueDatabase(media, false, current + 1);
-                            insertPlayNext(browser, Collections.singletonList(MappingUtil.mapMediaItem(media)));
+                            boolean preserveOrder = preservePlayNextOrder && Preferences.isPreservePlayNextOrderEnabled();
+                            int blockLengthBefore = preserveOrder ? playNextBlockLength : 0;
+                            int insertPos = computePlayNextInsertPos(browser, 1, preserveOrder);
+                            enqueueDatabase(media, false, insertPos);
+                            insertPlayNext(browser, Collections.singletonList(MappingUtil.mapMediaItem(media)), insertPos, blockLengthBefore, preserveOrder);
                         } else {
                             enqueueDatabase(media, false, mediaBrowserListenableFuture.get().getMediaItemCount());
                             mediaBrowserListenableFuture.get().addMediaItem(MappingUtil.mapMediaItem(media));
@@ -379,9 +427,8 @@ public class MediaManager {
     // each other, so we send the fixup from a one-shot timeline listener once the insert is
     // visible (same pattern startQueue uses), otherwise the fixup would be clobbered by
     // addMediaItems' own internal shuffle insert. The fixup is a no-op when shuffle is off.
-    private static void insertPlayNext(MediaBrowser browser, List<MediaItem> items) {
+    private static void insertPlayNext(MediaBrowser browser, List<MediaItem> items, int insertPos, int blockLengthBefore, boolean preserveOrder) {
         if (items.isEmpty()) return;
-        int insertPos = browser.getCurrentMediaItemIndex() + 1;
         int targetCount = browser.getMediaItemCount() + items.size();
         // Send the fixup request and do the timeline insert. These two are NOT ordered
         // relative to each other (and addMediaItems updates the controller optimistically
@@ -391,6 +438,8 @@ public class MediaManager {
         args.putInt(Constants.PLAY_NEXT_INSERT_POS, insertPos);
         args.putInt(Constants.PLAY_NEXT_COUNT, items.size());
         args.putInt(Constants.PLAY_NEXT_TARGET_COUNT, targetCount);
+        args.putBoolean(Constants.PLAY_NEXT_PRESERVE_ORDER, preserveOrder);
+        args.putInt(Constants.PLAY_NEXT_BLOCK_LENGTH, Math.max(blockLengthBefore, 0));
         ListenableFuture<SessionResult> fixup =
                 browser.sendCustomCommand(
                         new SessionCommand(Constants.CUSTOM_COMMAND_PLAY_NEXT, Bundle.EMPTY), args);
@@ -417,6 +466,7 @@ public class MediaManager {
                     if (mediaBrowserListenableFuture.isDone()) {
                         Log.e(TAG, "shuffle");
                         final MediaBrowser browser = mediaBrowserListenableFuture.get();
+                        resetPlayNextBlock();
 
                         backgroundExecutor.execute(() -> {
                             final List<MediaItem> mapped = MappingUtil.mapMediaItems(media);
@@ -442,6 +492,7 @@ public class MediaManager {
                 try {
                     if (mediaBrowserListenableFuture.isDone()) {
                         Log.e(TAG, "swap");
+                        resetPlayNextBlock();
                         mediaBrowserListenableFuture.get().moveMediaItem(from, to);
                         swapDatabase(media);
                     }
@@ -458,6 +509,7 @@ public class MediaManager {
                 try {
                     if (mediaBrowserListenableFuture.isDone()) {
                         Log.e(TAG, "remove");
+                        resetPlayNextBlock();
                         if (mediaBrowserListenableFuture.get().getMediaItemCount() > 1 && mediaBrowserListenableFuture.get().getCurrentMediaItemIndex() != toRemove) {
                             mediaBrowserListenableFuture.get().removeMediaItem(toRemove);
                             removeDatabase(media, toRemove);
@@ -478,6 +530,7 @@ public class MediaManager {
                 try {
                     if (mediaBrowserListenableFuture.isDone()) {
                         Log.e(TAG, "remove range");
+                        resetPlayNextBlock();
                         mediaBrowserListenableFuture.get().removeMediaItems(fromItem, toItem);
                         removeRangeDatabase(media, fromItem, toItem);
                     }
@@ -493,6 +546,7 @@ public class MediaManager {
             mediaBrowserListenableFuture.addListener(() -> {
                 try {
                     if (mediaBrowserListenableFuture.isDone()) {
+                        resetPlayNextBlock();
                         mediaBrowserListenableFuture.get().removeMediaItems(fromItem, toItem);
                         getQueueRepository().deleteRange(fromItem, toItem);
                     }

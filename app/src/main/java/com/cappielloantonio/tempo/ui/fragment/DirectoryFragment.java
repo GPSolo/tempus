@@ -42,6 +42,7 @@ import com.cappielloantonio.tempo.util.DownloadUtil;
 import com.cappielloantonio.tempo.util.ExternalAudioWriter;
 import com.cappielloantonio.tempo.util.MappingUtil;
 import com.cappielloantonio.tempo.util.Preferences;
+import com.cappielloantonio.tempo.util.PlayNextSwipeHelper;
 import com.cappielloantonio.tempo.viewmodel.DirectoryViewModel;
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -166,6 +167,7 @@ public class DirectoryFragment extends Fragment implements ClickCallback {
 
         musicDirectoryAdapter = new MusicDirectoryAdapter(this);
         bind.directoryRecyclerView.setAdapter(musicDirectoryAdapter);
+        PlayNextSwipeHelper.attach(bind.directoryRecyclerView, () -> mediaBrowserListenableFuture, musicDirectoryAdapter::getItem);
         directoryViewModel.loadMusicDirectory(getArguments().getString(Constants.MUSIC_DIRECTORY_ID)).observe(getViewLifecycleOwner(), directory -> {
             bind.appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
                 if ((bind.directoryInfoSector.getHeight() + verticalOffset) < (2 * ViewCompat.getMinimumHeight(bind.toolbar))) {
