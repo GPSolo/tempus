@@ -56,6 +56,8 @@ jobs:
           distribution: zulu
           java-version: '21'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - uses: gradle/actions/setup-gradle@v4
       - name: Test both flavors and build release APKs
         run: |
@@ -108,6 +110,8 @@ jobs:
           distribution: zulu
           java-version: '21'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: 'build-tools;36.1.0'
       - uses: actions/download-artifact@v4
         with:
           name: fork-unsigned-release
@@ -127,7 +131,6 @@ jobs:
           trap 'rm -f "$key"' EXIT
           umask 077
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$key"
-          sdkmanager 'build-tools;36.1.0'
           tools="$ANDROID_HOME/build-tools/36.1.0"
           mkdir signed
           for flavor in tempus degoogled; do

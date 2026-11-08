@@ -58,6 +58,8 @@ jobs:
           distribution: zulu
           java-version: '21'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - uses: gradle/actions/setup-gradle@v4
       - name: Build and test the merged branch, both flavors
         run: |
