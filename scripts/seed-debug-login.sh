@@ -8,7 +8,7 @@
 #   password=  yourpassword
 #   server_id= (optional; stable id used for cache keys, random UUID if omitted)
 #
-# Usage: scripts/seed-debug-login.sh <tempus|degoogled>
+# Usage: scripts/seed-debug-login.sh <tempus|degoogled|play>
 set -euo pipefail
 
 FLAVOR="${1:-degoogled}"
@@ -17,7 +17,8 @@ PROPS="$(cd "$(dirname "$0")/.." && pwd)/debug-server.properties"
 case "$FLAVOR" in
     tempus)    PKG="com.eddyizm.tempus.debug" ;;
     degoogled) PKG="com.eddyizm.degoogled.tempus.debug" ;;
-    *) echo "usage: $0 <tempus|degoogled>" >&2; exit 2 ;;
+    play)      PKG="com.eddyizm.play.tempus.debug" ;;
+    *) echo "usage: $0 <tempus|degoogled|play>" >&2; exit 2 ;;
 esac
 
 if ! adb get-state >/dev/null 2>&1; then

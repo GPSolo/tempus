@@ -1,5 +1,224 @@
 # Changelog
 
+## [4.31.0](https://github.com/eddyizm/tempus/releases/tag/v4.31.0) (2026-10-25)
+## What's Changed
+* feat: first pass at generating a aab google play bundle release by @eddyizm in https://github.com/eddyizm/tempus/pull/1056
+* chore(i18n): Update Japanese translation by @kou029w in https://github.com/eddyizm/tempus/pull/1216
+* chore(i18n): complete Basque (eu) and Spanish (es-ES) translations by @planetryan in https://github.com/eddyizm/tempus/pull/1217
+* chore(i18n): Update Polish translation by @skajmer in https://github.com/eddyizm/tempus/pull/1219
+* chore: Update CONTRIBUTING.md by @tvillega in https://github.com/eddyizm/tempus/pull/1227
+* fix: internet radio when casting to Kodi over UPnP by @pLum0 in https://github.com/eddyizm/tempus/pull/1233
+* feat: migrate artwork pager to glide-compose with adjacent preload by @sungoldsv in https://github.com/eddyizm/tempus/pull/1204
+* fix: hand nothing to a UPnP renderer while paused by @pLum0 in https://github.com/eddyizm/tempus/pull/1235
+* fix: arrive paused on the phone when casting to a UPnP renderer stops by @pLum0 in https://github.com/eddyizm/tempus/pull/1240
+* fix: adjust album art corner radius in queue list by @jaime-grj in https://github.com/eddyizm/tempus/pull/1241
+* fix: long-press sign-in stores the server address and id by @karan in https://github.com/eddyizm/tempus/pull/1176
+* fix: move playback onto the reachable server address when the network changes by @herrerad85 in https://github.com/eddyizm/tempus/pull/1245
+* feat: save queue by @MisterrChicken in https://github.com/eddyizm/tempus/pull/1248
+* fix: casting while playing sends the track paused by @herrerad85 in https://github.com/eddyizm/tempus/pull/1251
+* fix: Download sorting borked by @eddyizm in https://github.com/eddyizm/tempus/pull/1253
+
+## New Contributors
+* @MisterrChicken made their first contribution in https://github.com/eddyizm/tempus/pull/1248
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.30.0...v4.31.0
+
+## [4.30.0](https://github.com/eddyizm/tempus/releases/tag/v4.30.0) (2026-10-16)
+## What's Changed
+* feat: custom HTTP headers per server by @karan in https://github.com/eddyizm/tempus/pull/1169
+* refactor: remove null check for extras bundle by @tvillega in https://github.com/eddyizm/tempus/pull/1150
+* chore(i18n): Update zh-TW translation by @IEEE-754 in https://github.com/eddyizm/tempus/pull/1139
+* refactor: use newer method to set audio playback parameters by @tvillega in https://github.com/eddyizm/tempus/pull/1151
+* chore: upgrade gradle to 9.8 by @tvillega in https://github.com/eddyizm/tempus/pull/1152
+* feat: remove server dialog editor by @tvillega in https://github.com/eddyizm/tempus/pull/1180
+* fix: changing the equalizer while paused no longer hangs the app by @herrerad85 in https://github.com/eddyizm/tempus/pull/1170
+* feat: added fastscrollbar to download adapter by @eddyizm in https://github.com/eddyizm/tempus/pull/1198
+* docs: expand the usage guide to cover shipped features by @herrerad85 in https://github.com/eddyizm/tempus/pull/1179
+* feat: modern player queue sheet with summary and quick actions by @sungoldsv in https://github.com/eddyizm/tempus/pull/1181
+* fix: Cleaning failed rows on STATE_FAILED and sweeping stale rows dur… by @eddyizm in https://github.com/eddyizm/tempus/pull/1200
+* feat: control a UPnP renderer's volume from the phone by @herrerad85 in https://github.com/eddyizm/tempus/pull/1167
+* fix: keep multi disc albums in disc order in the music folders screen by @herrerad85 in https://github.com/eddyizm/tempus/pull/1192
+* fix: jump coverflow pager on far index changes by @sungoldsv in https://github.com/eddyizm/tempus/pull/1182
+* fix: keep the last row of the artist page above the mini player by @herrerad85 in https://github.com/eddyizm/tempus/pull/1202
+* chore(i18n): update Spanish (es-ES) translation by @jaime-grj in https://github.com/eddyizm/tempus/pull/1206
+* fix: add options to disable UPnP and remote player functions by @X-4-dev in https://github.com/eddyizm/tempus/pull/1186
+* feat: parametric equalizer that imports AutoEq profiles by @herrerad85 in https://github.com/eddyizm/tempus/pull/1207
+* fix: keep a playlist's own cover inside the header box by @herrerad85 in https://github.com/eddyizm/tempus/pull/1211
+* chore: update wording to match behavior by @eddyizm in https://github.com/eddyizm/tempus/pull/1212
+* feat: update Privacy policy by @eddyizm in https://github.com/eddyizm/tempus/pull/1218
+
+## New Contributors
+* @karan made their first contribution in https://github.com/eddyizm/tempus/pull/1169
+* @IEEE-754 made their first contribution in https://github.com/eddyizm/tempus/pull/1139
+* @X-4-dev made their first contribution in https://github.com/eddyizm/tempus/pull/1186
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.29.0...v4.30.0
+
+## [4.29.0](https://github.com/eddyizm/tempus/releases/tag/v4.29.0) (2026-10-08)
+## What's Changed
+* feat: add to queue/play next options for album page by @eddyizm in https://github.com/eddyizm/tempus/pull/1137
+* fix: ask for notifications and local network access in one request by @herrerad85 in https://github.com/eddyizm/tempus/pull/1146
+* feat: allow copying the title and artist in PlayerControllerFragment by @jaime-grj in https://github.com/eddyizm/tempus/pull/1134
+* fix: clear cached playlists when you switch to another server by @herrerad85 in https://github.com/eddyizm/tempus/pull/1136
+* fix: keep the first home card full size after rotating to landscape by @herrerad85 in https://github.com/eddyizm/tempus/pull/1138
+* fix: load cover art through OkHttp by @paulbertoli94 in https://github.com/eddyizm/tempus/pull/1130
+* feat: Resume playback where you left off, with a Continue listening section by @xsteadfastx in https://github.com/eddyizm/tempus/pull/1089
+* feat: Add paired LAN remote playback using the original player by @gianlucaf81 in https://github.com/eddyizm/tempus/pull/1131
+* feat: play to UPnP and DLNA renderers on the network by @herrerad85 in https://github.com/eddyizm/tempus/pull/1101
+* fix: count a VPN as connected when a network sits under it by @herrerad85 in https://github.com/eddyizm/tempus/pull/1135
+* fix: handle no args across all bottom sheet dialogs by @eddyizm in https://github.com/eddyizm/tempus/pull/1148
+* fix: updates missing new actions by @eddyizm in https://github.com/eddyizm/tempus/pull/1155
+* fix: hold the startup ping until the local network prompt is answered by @herrerad85 in https://github.com/eddyizm/tempus/pull/1159
+* fix: restored artist click on album page by @eddyizm in https://github.com/eddyizm/tempus/pull/1156
+* feat: add permissions manager by @tvillega in https://github.com/eddyizm/tempus/pull/1153
+* fix: Uninitialized podcastEpisodesFull List by @eddyizm in https://github.com/eddyizm/tempus/pull/1162
+* chore(i18n): went gangbusters and added all the missing translations for the new lan stuff' by @eddyizm in https://github.com/eddyizm/tempus/pull/1163
+* fix: stop MissingTranslation from failing translation PRs by @herrerad85 in https://github.com/eddyizm/tempus/pull/1165
+
+## New Contributors
+* @paulbertoli94 made their first contribution in https://github.com/eddyizm/tempus/pull/1130
+* @xsteadfastx made their first contribution in https://github.com/eddyizm/tempus/pull/1089
+* @gianlucaf81 made their first contribution in https://github.com/eddyizm/tempus/pull/1131
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.28.0...v4.29.0
+
+## [4.28.0](https://github.com/eddyizm/tempus/releases/tag/v4.28.0) (2026-10-01)
+## What's Changed
+* feat(android-auto): group multi-disc album tracks by @a-mcc in https://github.com/eddyizm/tempus/pull/1097
+* fix: probe the local server address without switching onto it by @herrerad85 in https://github.com/eddyizm/tempus/pull/1098
+* feat: Keep a playlist's downloads in sync with the server by @herrerad85 in https://github.com/eddyizm/tempus/pull/1105
+* feat(i18n): add Swedish translation by @NickWick13 in https://github.com/eddyizm/tempus/pull/1116
+* feat: update Russian localization by @ponfertato in https://github.com/eddyizm/tempus/pull/1091
+* fix: hide access to equalizer when it's set to External or Default by @jaime-grj in https://github.com/eddyizm/tempus/pull/1119
+* fix: highlight the last line of lyrics correctly by @jaime-grj in https://github.com/eddyizm/tempus/pull/1120
+* fix: resolve some UI bugs by @jaime-grj in https://github.com/eddyizm/tempus/pull/1122
+* fix: show server name in toolbar when there is only one library by @jaime-grj in https://github.com/eddyizm/tempus/pull/1123
+* fix: give the album list page its own view model by @herrerad85 in https://github.com/eddyizm/tempus/pull/1124
+* fix: keep the notification heart in step with a star made in the app by @herrerad85 in https://github.com/eddyizm/tempus/pull/1128
+* chore(i18n): Update Japanese translation by @kou029w in https://github.com/eddyizm/tempus/pull/1129
+
+## New Contributors
+* @a-mcc made their first contribution in https://github.com/eddyizm/tempus/pull/1097
+* @NickWick13 made their first contribution in https://github.com/eddyizm/tempus/pull/1116
+* @ponfertato made their first contribution in https://github.com/eddyizm/tempus/pull/1091
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.27.0...v4.28.0
+
+## [4.27.0](https://github.com/eddyizm/tempus/releases/tag/v4.27.0) (2026-09-19)
+## What's Changed
+* feat: Full screen playlist editor with a working drag handle by @herrerad85 in https://github.com/eddyizm/tempus/pull/1076
+* fix: Repeat one restarts a transcoded track from the start after a seek by @herrerad85 in https://github.com/eddyizm/tempus/pull/1084
+* fix: enqueued the Retrofit Call<ApiResponse> in requestPodcastEpisode… by @eddyizm in https://github.com/eddyizm/tempus/pull/1088
+* fix: prevent startup crash on duplicate tracks in playback queue by @shkarlsson in https://github.com/eddyizm/tempus/pull/1085
+* feat: Sort directories in lexicographical order and files by track number by @SteveMKII in https://github.com/eddyizm/tempus/pull/1086
+* fix: Keep the favorite heart in step across every screen by @herrerad85 in https://github.com/eddyizm/tempus/pull/1095
+* chore(i18n): Add Azerbaijani (az) translation by @jamalkamaladdin in https://github.com/eddyizm/tempus/pull/1090
+* fix: expand now playing on media notification tap by @sungoldsv in https://github.com/eddyizm/tempus/pull/1051
+* fix: add the az locale to nine lint baseline entries by @herrerad85 in https://github.com/eddyizm/tempus/pull/1096
+* chore(i18n): Update Japanese translation by @kou029w in https://github.com/eddyizm/tempus/pull/1087
+
+## New Contributors
+* @SteveMKII made their first contribution in https://github.com/eddyizm/tempus/pull/1086
+* @jamalkamaladdin made their first contribution in https://github.com/eddyizm/tempus/pull/1090
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.26.8...v4.27.0
+
+## [4.26.8](https://github.com/eddyizm/tempus/releases/tag/v4.26.8) (2026-09-10)
+## What's Changed
+* fix: treat a refused playlist add, remove or delete as a failure by @herrerad85 in https://github.com/eddyizm/tempus/pull/1066
+* fix: no search result placeholder never goes away after triggered by @tvillega in https://github.com/eddyizm/tempus/pull/1078
+* fix: Sort downloads by album artist so compilations stay together by @herrerad85 in https://github.com/eddyizm/tempus/pull/1063
+* fix: dark theme not applying when app in polish lang by @tvillega in https://github.com/eddyizm/tempus/pull/1079
+* fix: crash when login fails by @tvillega in https://github.com/eddyizm/tempus/pull/1080
+* fix: view swaps from callbacks crash the app when activity is suspended by @tvillega in https://github.com/eddyizm/tempus/pull/1081
+* feat: apply playlist sort preference to playlist chooser dialog by @shkarlsson in https://github.com/eddyizm/tempus/pull/1062
+
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.26.1...v4.27.8
+
+## [4.26.1](https://github.com/eddyizm/tempus/releases/tag/v4.26.1) (2026-09-02)
+## What's Changed
+* fix: stop a playlist edit forcing the playlist public by @herrerad85 in https://github.com/eddyizm/tempus/pull/1029
+* feat: add no search result placeholder by @tvillega in https://github.com/eddyizm/tempus/pull/1035
+* fix: guard against a null created date when sorting new releases by @Pulut in https://github.com/eddyizm/tempus/pull/1037
+* docs: fix typos documention -> documentation, completly -> completely by @vaibhav8a in https://github.com/eddyizm/tempus/pull/1042
+* fix: make the notification previous button restart the song like the app does by @herrerad85 in https://github.com/eddyizm/tempus/pull/1038
+* fix: make saving a playlist edit replace its contents instead of appending by @herrerad85 in https://github.com/eddyizm/tempus/pull/1041
+* feat: Increase song/image cache size by @eddyizm in https://github.com/eddyizm/tempus/pull/1039
+* feat: Add Cover Flow/Carousel to player by @sungoldsv in https://github.com/eddyizm/tempus/pull/1026
+* feat: darker than darkness theme by @tvillega in https://github.com/eddyizm/tempus/pull/1031
+* refactor: move crash landing to its own package by @tvillega in https://github.com/eddyizm/tempus/pull/1050
+* chore: bumped version, added new translations to address lint errors by @eddyizm in https://github.com/eddyizm/tempus/pull/1052
+* chore(i18n): Update Polish translation by @skajmer in https://github.com/eddyizm/tempus/pull/1053
+* fix: keep the playlist when you download one song from it by @herrerad85 in https://github.com/eddyizm/tempus/pull/1054
+* fix: come back to the song you paused, at the position you paused it by @herrerad85 in https://github.com/eddyizm/tempus/pull/1055
+* feat: explicit accent color on player view by @tvillega in https://github.com/eddyizm/tempus/pull/1057
+* fix: flashback card not following theme directive by @tvillega in https://github.com/eddyizm/tempus/pull/1060
+* fix: search bar not following theme directive by @tvillega in https://github.com/eddyizm/tempus/pull/1058
+* docs: update the usage guide for four user visible changes by @herrerad85 in https://github.com/eddyizm/tempus/pull/1059
+
+## New Contributors
+* @Pulut made their first contribution in https://github.com/eddyizm/tempus/pull/1037
+* @vaibhav8a made their first contribution in https://github.com/eddyizm/tempus/pull/1042
+* @sungoldsv made their first contribution in https://github.com/eddyizm/tempus/pull/1026
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.25.5...v4.26.1
+
+## [4.25.5](https://github.com/eddyizm/tempus/releases/tag/v4.25.5) (2026-08-23)
+## What's Changed
+* fix: login activity add header by @tvillega in https://github.com/eddyizm/tempus/pull/1015
+* fix: access local network not declared in manifest by @tvillega in https://github.com/eddyizm/tempus/pull/1024
+* fix: keep a blank release type out of the artist page sections by @herrerad85 in https://github.com/eddyizm/tempus/pull/1023
+* fix: Virtualize the internet-radio list to stop OOM on large station  (#308) by @eddyizm in https://github.com/eddyizm/tempus/pull/1020
+* fix: stop the player holding itself open after the app is closed by @herrerad85 in https://github.com/eddyizm/tempus/pull/1019
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.25.0...v4.25.5
+
+## [4.25.0](https://github.com/eddyizm/tempus/releases/tag/v4.25.0) (2026-08-22)
+## What's Changed
+* feat: add login activity by @tvillega in https://github.com/eddyizm/tempus/pull/949
+* fix: podcast crash when missing field by @tvillega in https://github.com/eddyizm/tempus/pull/975
+* Fix for #927 [CRASH] - Attempt to invoke getParcelable on null object reference by @terranprog in https://github.com/eddyizm/tempus/pull/976
+* Feat: artist add to playlist (#91) by @eddyizm in https://github.com/eddyizm/tempus/pull/979
+* chore: update sdk and permissions by @tvillega in https://github.com/eddyizm/tempus/pull/986
+* Feat/subsonic tests by @eddyizm in https://github.com/eddyizm/tempus/pull/985
+* fix: keep the play queue resolving after a wifi to cellular handover by @herrerad85 in https://github.com/eddyizm/tempus/pull/987
+* fix: show the real song length when the server performs the transcode by @herrerad85 in https://github.com/eddyizm/tempus/pull/988
+* feat: add more theming options by @tvillega in https://github.com/eddyizm/tempus/pull/990
+* chore(i18n): Update Polish translation by @skajmer in https://github.com/eddyizm/tempus/pull/992
+* UI/artist page options by @eddyizm in https://github.com/eddyizm/tempus/pull/994
+* chore(i18n): Update Spanish (es-ES) translation by @jaime-grj in https://github.com/eddyizm/tempus/pull/995
+* fix: restore equalizer action by @eddyizm in https://github.com/eddyizm/tempus/pull/1000
+* refactor: stabilize login activity by @tvillega in https://github.com/eddyizm/tempus/pull/991
+* refactor: moved to new namespace, from cappielloantonio/tempo to eddy… by @eddyizm in https://github.com/eddyizm/tempus/pull/998
+* fix: Resolve bugs when displaying audio codec and quality by @jaime-grj in https://github.com/eddyizm/tempus/pull/1003
+* feat: Add search functionality for Settings by @jaime-grj in https://github.com/eddyizm/tempus/pull/1005
+* Switch music library from the toolbar and see which one you are in by @herrerad85 in https://github.com/eddyizm/tempus/pull/1006
+* Add a canWrite check to external storage before trying to use it by @sam-jeffery in https://github.com/eddyizm/tempus/pull/1004
+* feat: add color picker for accent color by @eddyizm in https://github.com/eddyizm/tempus/pull/1009
+* feat: show 20 playlists in home view (#1010) by @eddyizm in https://github.com/eddyizm/tempus/pull/1011
+* fix: tell the user a playlist is empty instead of a dead Play button by @herrerad85 in https://github.com/eddyizm/tempus/pull/1012
+
+## New Contributors
+* @terranprog made their first contribution in https://github.com/eddyizm/tempus/pull/976
+* @sam-jeffery made their first contribution in https://github.com/eddyizm/tempus/pull/1004
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.24.0...v4.25.0
+
+## [4.24.0](https://github.com/eddyizm/tempus/releases/tag/v4.24.0) (2026-08-15)
+## What's Changed
+* fix: add Basque (eu) to locale_config.xml by @planetryan in https://github.com/eddyizm/tempus/pull/960
+* feat: add a music library switcher so browsing and search can be scoped to one library by @herrerad85 in https://github.com/eddyizm/tempus/pull/951
+* Fix a crash when the server reports no playlists by @herrerad85 in https://github.com/eddyizm/tempus/pull/965
+* fix: guard app bar offset listeners against a null view binding by @herrerad85 in https://github.com/eddyizm/tempus/pull/968
+* Add Japanese language support by @kou029w in https://github.com/eddyizm/tempus/pull/973
+* build: pin the FFmpeg source to a commit in bin/build.sh by @herrerad85 in https://github.com/eddyizm/tempus/pull/978
+
+## New Contributors
+* @kou029w made their first contribution in https://github.com/eddyizm/tempus/pull/973
+
+**Full Changelog**: https://github.com/eddyizm/tempus/compare/v4.23.2...v4.24.0
+
 ## [4.23.2](https://github.com/eddyizm/tempus/releases/tag/v4.23.2) (2026-08-04)
 * fix: stop the 4.23 upgrade wiping downloads, and restore them for users already hit (#961)
 

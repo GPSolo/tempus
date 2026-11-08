@@ -171,6 +171,8 @@
     <string name="home_sync_starred_title">似乎有一些收藏的歌曲需要同步</string>
     <string name="home_title_best_of">最佳</string>
     <string name="home_title_discovery">發現</string>
+    <string name="home_title_continue_listening">繼續收聽</string>
+    <string name="home_continue_listening_resume_at">從 %1$s 繼續</string>
     <string name="home_title_discovery_shuffle_all_button">隨機播放全部</string>
     <string name="home_title_flashback">重溫舊曲</string>
     <string name="home_title_internet_radio_station">網路廣播電臺</string>
@@ -213,7 +215,6 @@
     <string name="login_title">Subsonic 伺服器</string>
     <string name="login_title_expanded">Subsonic 伺服器</string>
     <string name="media_route_menu_title">投送</string>
-    <string name="menu_add_button">新增</string>
     <string name="menu_add_to_playlist_button">新增到播放清單</string>
     <string name="menu_download_all_button">全部下載</string>
     <string name="menu_download_label">下載</string>
@@ -319,17 +320,6 @@
     <string name="search_title_album">專輯</string>
     <string name="search_title_artist">藝術家</string>
     <string name="search_title_song">歌曲</string>
-    <string name="server_signup_dialog_action_delete_toast">長按刪除</string>
-    <string name="server_signup_dialog_action_low_security">低安全性</string>
-    <string name="server_signup_dialog_hint_local_address">本地 URL</string>
-    <string name="server_signup_dialog_hint_name">伺服器名稱</string>
-    <string name="server_signup_dialog_hint_password">密碼</string>
-    <string name="server_signup_dialog_hint_url">伺服器位址</string>
-    <string name="server_signup_dialog_hint_username">使用者名稱</string>
-    <string name="server_signup_dialog_negative_button">取消</string>
-    <string name="server_signup_dialog_neutral_button">刪除</string>
-    <string name="server_signup_dialog_positive_button">儲存</string>
-    <string name="server_signup_dialog_title">新增伺服器</string>
     <string name="server_unreachable_dialog_negative_button">取消</string>
     <string name="server_unreachable_dialog_neutral_button">前往登入</string>
     <string name="server_unreachable_dialog_positive_button">仍然繼續</string>
@@ -392,7 +382,6 @@
     <string name="settings_music_directory_summary">啟用後則顯示音樂目錄部分。 請注意，要使資料夾導航正常工作，伺服器必須支援此功能。</string>
     <string name="settings_podcast">顯示播客</string>
     <string name="settings_podcast_summary">啟用後則顯示播客部分。</string>
-    <string name="settings_queue_syncing_countdown">同步定時器</string>
     <string name="settings_queue_syncing_summary">啟用後將允許當前使用者儲存其播放序列，並能夠在開啟應用程式時載入儲存狀態。</string>
     <string name="settings_queue_syncing_title">同步當前使用者的播放序列</string>
     <string name="settings_radio">顯示電臺</string>
@@ -543,4 +532,8 @@
     <string name="widget_placeholder_subtitle">開啟 Tempus</string>
     <string name="widget_time_duration_placeholder">0:00</string>
     <string name="widget_time_elapsed_placeholder">0:00</string>
+    <string name="playlist_chooser_dialog_visibility_summary_v2">開啟此選項會將播放清單設為公開。保持原樣不會改變播放清單的可見性。</string>
+    <string name="playlist_editor_dialog_action_save_empty">播放清單必須至少保留一首曲目</string>
+    <string name="search_title_empty_response">沒有結果。</string>
+    <string name="search_description_empty_response">我們檢查了您的伺服器回應，但它是空的。</string>
 </resources>

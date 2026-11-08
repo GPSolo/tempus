@@ -31,10 +31,7 @@
     <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.eddyizm.tempus%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Feddyizm%2Ftempus%22%2C%22author%22%3A%22eddyizm%22%2C%22name%22%3A%22Tempus%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Atrue%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22tempus%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D"><img width="200" src="https://github.com/user-attachments/assets/119e7ff4-2636-43cb-ab7f-1b6a58ac3570" /></a>
     <a href="https://www.openapk.net/tempus/com.eddyizm.degoogled.tempus/"><img src="https://camo.githubusercontent.com/cd56895b28a73ebd781a65b4f567add5419e45797a5cf1485ce408e851c2318e/68747470733a2f2f7777772e6f70656e61706b2e6e65742f696d616765732f6f70656e61706b2d62616467652e706e67" width="200"></a>
 </p>
-<!-- 
-    <a href="https://f-droid.org/packages/com.cappielloantonio.notquitemy.tempo"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" width="200"></a>
--->
-  
+ 
 
 **Tempus** is an open-source and privacy focused music client for Subsonic, designed and built natively for Android. It provides a seamless and intuitive music streaming experience, allowing you to access and play your Subsonic music library directly from your Android device. 
 
@@ -80,7 +77,7 @@ Please note the two variants in the release assets include release/debug and 32/
 - **Multiple Libraries**: Tempus handles multi-library setups gracefully. They are displayed as Library folders.
 - **Equalizer**: Option to use built-in or third-party equalizer.
 - **Widget**: New widget to keeping the basic controls on your screen at all times.
-- **Available in 12 languages**: Currently in Catalan, Chinese, French, German, Italian, Korean, Polish, Portuguese, Russion, Spanish (Spain), Spanish (Latam) and Turkish
+- **Available in 14 languages**: Currently in Basque, Catalan, Chinese, French, German, Italian, Japanese, Korean, Polish, Portuguese, Russion, Spanish (Spain), Spanish (Latam) and Turkish
 
 ### 🟥GitHub version only
 - **Chromecast Support**: Stream your music to Chromecast devices. The support is currently in a rudimentary state.
@@ -141,12 +138,18 @@ Please fork and open PR's against the development branch. Make sure your PR buil
 
 If there is an UI change, please include a before/after screenshot and a short video/gif if that helps elaborating the fix/feature in the PR. 
 
-Currently there are no tests but I would love to start on some unit tests. 
+Please add simple unit tests when applicable.
 
-Not a hard requirement but any new feature/change should ideally include an update to the nacent documention. 
+Not a hard requirement but any new feature/change should ideally include an update to the nacent documentation. 
 
-*Special Thanks*  
-All the amazing [contributors](https://github.com/eddyizm/tempus/graphs/contributors)❤️
+*Special Thanks -> core contributors*  
+
+[tvillega](https://github.com/tvillega)  
+[herrerad85](https://github.com/herrerad85)  
+[MaFo-28](https://github.com/MaFo-28) for his amazing AA refactor
+
+and everyone else who has helped move the fork forward with comments, feedback, testing and of course 
+❤️ [contributors](https://github.com/eddyizm/tempus/graphs/contributors) ❤️
 
 ## Donate
 

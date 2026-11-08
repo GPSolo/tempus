@@ -176,6 +176,8 @@
     </plurals>
     <string name="home_title_best_of">Lo mejor de</string>
     <string name="home_title_discovery">Descubrir</string>
+    <string name="home_title_continue_listening">Continuar escuchando</string>
+    <string name="home_continue_listening_resume_at">Continuar en %1$s</string>
     <string name="home_title_discovery_shuffle_all_button">Reproducir en aleatorio</string>
     <string name="home_title_flashback">Recuerdos</string>
     <string name="home_title_internet_radio_station">Estaciones de radio</string>
@@ -220,7 +222,6 @@
     <string name="login_title">Servidores</string>
     <string name="login_title_expanded">Servidores de Subsonic</string>
     <string name="media_route_menu_title">Transmitir</string>
-    <string name="menu_add_button">Añadir</string>
     <string name="menu_add_to_playlist_button">Añadir a una lista de reproducción</string>
     <string name="playlist_added_to_queue">¡Se añadió la lista a la cola!</string>
     <string name="menu_go_to_playlist_button">Reproducir</string>
@@ -244,6 +245,7 @@
     <string name="menu_last_year_name">Último año</string>
     <string name="menu_library_label">Librería</string>
     <string name="menu_search_button">Buscar</string>
+    <string name="settings_search_hint">Buscar preferencias</string>
     <string name="menu_settings_button">Ajustes</string>
     <string name="menu_sort_artist">Artista</string>
     <string name="menu_sort_name">Nombre</string>
@@ -289,7 +291,6 @@
     <string name="playlist_chooser_dialog_visibility_public">Pública</string>
     <string name="playlist_chooser_dialog_visibility_private">Privada</string>
     <string name="playlist_chooser_dialog_visibility_switch_label">Lista de reproducción pública</string>
-    <string name="playlist_chooser_dialog_visibility_summary">El servidor actualiza la visibilidad en cada modificación. Por defecto es privado</string>
     <string name="playlist_counted_tracks">%1$d canciones •  %2$s</string>
     <string name="playlist_duration">Duración • %1$s</string>
     <string name="playlist_editor_dialog_action_delete_toast">Mantén presionado para eliminar</string>
@@ -363,18 +364,6 @@
     <string name="search_title_album">Álbumes</string>
     <string name="search_title_artist">Artistas</string>
     <string name="search_title_song">Canciones</string>
-    <string name="server_signup_dialog_action_low_security">Baja seguridad</string>
-    <string name="server_signup_dialog_action_delete_toast">Mantén presionado para borrar</string>
-    <string name="server_signup_dialog_hint_local_address">URL Local</string>
-    <string name="server_signup_dialog_hint_name">Nombre del servidor</string>
-    <string name="server_signup_dialog_hint_password">Contraseña</string>
-    <string name="server_signup_dialog_hint_url">URL del servidor</string>
-    <string name="server_signup_dialog_hint_username">Nombre de usuario</string>
-    <string name="server_signup_dialog_hint_client_certificate">Certificados (optional)</string>
-    <string name="server_signup_dialog_negative_button">Cancelar</string>
-    <string name="server_signup_dialog_neutral_button">Borrar</string>
-    <string name="server_signup_dialog_positive_button">Guardar</string>
-    <string name="server_signup_dialog_title">Añadir servidor</string>
     <string name="server_unreachable_dialog_negative_button">Cancelar</string>
     <string name="server_unreachable_dialog_neutral_button">Iniciar sesión</string>
     <string name="server_unreachable_dialog_positive_button">Continuar de todo modos</string>
@@ -464,7 +453,6 @@
     <string name="settings_track_number_summary">Si está activado, mostrará el número de pista (en el álbum) de la canción que estás escuchando.</string>
     <string name="settings_item_rating">Mostrar valoración de estrellas</string>
     <string name="settings_item_rating_summary">Si está activado, mostrará si la canción esta marcada como favorita en las listas.</string>
-    <string name="settings_queue_syncing_countdown">Periodo de sincronización</string>
     <string name="settings_queue_syncing_summary">Si está activado, podrás guardar tu cola de reproducción actual al abrir la aplicación.</string>
     <string name="settings_queue_syncing_title">Sincronizar la cola de reproducción para el usuario [Puede no funcionar bien]</string>
     <string name="settings_show_mini_shuffle_button">Mostrar botón de aleatorio en las notificaciones</string>
@@ -743,4 +731,8 @@
     <string name="playlist_error_not_found_message">No se pudo encontrar la lista en el servidor. Será elminará del caché local</string>
     <string name="playlist_error_not_found_toast">Lista de reproducción eliminada del caché</string>
 
+    <string name="playlist_chooser_dialog_visibility_summary_v2">Al activar esto, la lista de reproducción se hace pública. Si lo dejas como está, no cambia la visibilidad de la lista de reproducción.</string>
+    <string name="playlist_editor_dialog_action_save_empty">Una lista de reproducción debe tener al menos una pista</string>
+    <string name="search_title_empty_response">Sin resultados.</string>
+    <string name="search_description_empty_response">Hemos comprobado la respuesta de su servidor pero estaba vacía.</string>
 </resources>

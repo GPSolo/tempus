@@ -14,11 +14,13 @@
         <item>高</item>
         <item>中</item>
         <item>低</item>
+        <item>超高 (1 GiB)</item>
     </string-array>
     <string-array name="pref_cache_size_values">
         <item>500</item>
         <item>250</item>
         <item>125</item>
+        <item>1024</item>
     </string-array>
 
     <string-array name="pref_image_size_titles">
@@ -38,6 +40,8 @@
         <item>256 MiB</item>
         <item>512 MiB</item>
         <item>1024 MiB</item>
+        <item>2048 MiB</item>
+        <item>4096 MiB</item>
     </string-array>
     <string-array name="streaming_cache_size_values">
         <item>0</item>
@@ -45,6 +49,8 @@
         <item>256</item>
         <item>512</item>
         <item>1024</item>
+        <item>2048</item>
+        <item>4096</item>
     </string-array>
 
     <string-array name="max_bitrate_wifi_list_titles">
@@ -177,17 +183,6 @@
         <item>aac</item>
         <item>mp3</item>
         <item>flac</item>
-    </string-array>
-
-    <string-array name="queue_syncing_countdown_titles">
-        <item>10秒</item>
-        <item>5秒</item>
-        <item>2秒</item>
-    </string-array>
-    <string-array name="queue_syncing_countdown_values">
-        <item>10</item>
-        <item>5</item>
-        <item>2</item>
     </string-array>
 
     <string-array name="rounded_corner_size_titles">

@@ -1,4 +1,8 @@
-# Local Changes — Tempo (uncommitted work)
+# Local Changes — Tempo (historical pre-merge snapshot)
+
+This snapshot was committed as `d45fafbe` before the November 2026 upstream merge.
+The paths and diff below intentionally document the original implementation.
+See `UPSTREAM_INTEGRATION.md` for namespace, Compose queue and build-hook adaptations.
 
 This document catalogues every uncommitted change in the working tree of the Tempo Android app
 (Subsonic client). It is written for the repo owner: what changed, why, how many lines, and the

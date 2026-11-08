@@ -176,6 +176,8 @@
     </plurals>
     <string name="home_title_best_of">Best of</string>
     <string name="home_title_discovery">Découverte</string>
+    <string name="home_title_continue_listening">Continuer à écouter</string>
+    <string name="home_continue_listening_resume_at">Reprendre à %1$s</string>
     <string name="home_title_discovery_shuffle_all_button">Tout mélanger</string>
     <string name="home_title_flashback">Flashback</string>
     <string name="home_title_internet_radio_station">Stations Radio Internet</string>
@@ -218,7 +220,6 @@
     <string name="login_title">Serveurs Subsonic</string>
     <string name="login_title_expanded">Serveurs Subsonic</string>
     <string name="media_route_menu_title">Cast</string>
-    <string name="menu_add_button">Ajouter</string>
     <string name="menu_add_to_playlist_button">Ajouter à une playlist</string>
     <string name="playlist_added_to_queue">Playlist ajoutée à la file d\'attente</string>
     <string name="menu_go_to_playlist_button">Lire</string>
@@ -287,7 +288,6 @@
     <string name="playlist_chooser_dialog_visibility_public">Publique</string>
     <string name="playlist_chooser_dialog_visibility_private">Privé</string>
 	<string name="playlist_chooser_dialog_visibility_switch_label">Rendre la playlist publique</string>
-    <string name="playlist_chooser_dialog_visibility_summary">Le serveur met à jour la visibilité à chaque requête. Est défini à privé par défaut.</string>
     <string name="playlist_counted_tracks">%1$d titres •  %2$s</string>
     <string name="playlist_duration">Durée  •  %1$s</string>
     <string name="playlist_editor_dialog_action_delete_toast">Appui long pour supprimer</string>
@@ -295,7 +295,7 @@
     <string name="playlist_editor_dialog_negative_button">Annuler</string>
     <string name="playlist_editor_dialog_neutral_button">Supprimer</string>
     <string name="playlist_editor_dialog_positive_button">Enregistrer</string>
-    <string name="playlist_editor_dialog_title">Créer une playlist</string>
+    <string name="playlist_editor_dialog_title">Modifier la playlist</string>
     <string name="playlist_editor_dialog_action_delete_success">Playlist supprimée</string>
     <string name="playlist_editor_dialog_action_delete_failure">Échec de suppression de la playlist</string>
     <string name="playlist_editor_dialog_action_save_success">Playlist sauvegardée</string>
@@ -361,18 +361,6 @@
     <string name="search_title_album">Albums</string>
     <string name="search_title_artist">Artistes</string>
     <string name="search_title_song">Pistes</string>
-    <string name="server_signup_dialog_action_low_security">Sécurité basse</string>
-    <string name="server_signup_dialog_action_delete_toast">Appui long pour supprimer</string>
-    <string name="server_signup_dialog_hint_local_address">URL local</string>
-    <string name="server_signup_dialog_hint_name">Nom du serveur</string>
-    <string name="server_signup_dialog_hint_password">Mot de passe</string>
-    <string name="server_signup_dialog_hint_url">URL du serveur</string>
-    <string name="server_signup_dialog_hint_username">Nom d\'utilisateur</string>
-	<string name="server_signup_dialog_hint_client_certificate">Certificat client (optionnel)</string>
-    <string name="server_signup_dialog_negative_button">Annuler</string>
-    <string name="server_signup_dialog_neutral_button">Supprimer</string>
-    <string name="server_signup_dialog_positive_button">Enregistrer</string>
-    <string name="server_signup_dialog_title">Ajouter un serveur</string>
     <string name="server_unreachable_dialog_negative_button">Annuler</string>
     <string name="server_unreachable_dialog_neutral_button">Aller à la connexion</string>
     <string name="server_unreachable_dialog_positive_button">Continuer quand même</string>
@@ -463,7 +451,6 @@
     <string name="settings_track_number_summary">Si activé, rend visible la note de la piste en cours de lecture</string>
     <string name="settings_item_rating">Afficher la note</string>
     <string name="settings_item_rating_summary">Si activé, la note et le statut de mise en favori de l\'élément seront affichés.</string>
-    <string name="settings_queue_syncing_countdown">Minuteur de synchronisation</string>
     <string name="settings_queue_syncing_summary">Si activé, l\'utilisateur pourra sauvegarder sa file d\'attente et la recharger au démarrage de l\'application.</string>
     <string name="settings_queue_syncing_title">Synchroniser la file d\'attente pour cet utilisateur [fonctionnalité en évolution]</string>
     <string name="settings_show_mini_shuffle_button">Afficher le bouton Mélanger</string>
@@ -739,4 +726,35 @@
     <string name="playlist_error_not_found_title">Playlist introuvable</string>
     <string name="playlist_error_not_found_message">Cette playlist n\'a pas été trouvée sur le serveur. Elle sera supprimée de votre cache local.</string>
     <string name="playlist_error_not_found_toast">Playlist supprimée du cache</string>
+    <string name="playlist_chooser_dialog_visibility_summary_v2">L\'activation de cette option rend la liste de lecture publique. Si vous la laissez telle quelle, la visibilité de la liste de lecture ne sera pas modifiée.</string>
+    <string name="playlist_editor_dialog_action_save_empty">Une liste de lecture doit contenir au moins un titre</string>
+    <string name="menu_keep_synced_button">Garder synchronisée</string>
+    <plurals name="playlist_sync_downloading">
+        <item quantity="one">Téléchargement de %d titre en cours</item>
+        <item quantity="other">Téléchargement de %d titres en cours</item>
+    </plurals>
+    <string name="playlist_editor_hint">Faites glisser la poignée pour réorganiser et touchez la corbeille pour supprimer. Rien n\'est envoyé avant l\'enregistrement.</string>
+    <string name="playlist_editor_remove_track">Supprimer le titre</string>
+    <string name="playlist_editor_drag_track">Faire glisser pour réorganiser</string>
+    <string name="menu_edit_playlist_details_button">Modifier les détails</string>
+    <string name="playlist_details_dialog_title">Détails de la playlist</string>
+    <string name="playlist_editor_load_failure">Impossible de charger la playlist</string>
+    <string name="playlist_editor_removed_track">Retiré de la liste</string>
+    <string name="song_bottom_sheet_undo">Annuler</string>
+    <string name="song_bottom_sheet_undo_failure">Impossible de restaurer le morceau</string>
+    <string name="la_theme_card_emerald_green_description">Couleur d\'accent vert émeraude</string>
+    <string name="la_perms_title">Demander des autorisations</string>
+    <string name="la_perms_description">Les autorisations nécessaires et leur utilisation sont indiquées ci-dessous.</string>
+    <string name="la_perms_status_provided">Accordée</string>
+    <string name="la_perms_status_not_provided">Demander</string>
+    <string name="la_perms_internet_title">Internet</string>
+    <string name="la_perms_internet_description">Requise pour accéder à votre serveur musical sur Internet.</string>
+    <string name="la_perms_notifications_title">Notifications</string>
+    <string name="la_perms_notifications_description">Requise pour afficher l\'état des téléchargements et les commandes du lecteur.</string>
+    <string name="la_perms_access_local_network_title">Accès au réseau local</string>
+    <string name="la_perms_access_local_network_description">Requis pour accéder aux autres appareils sur le même réseau local que votre appareil actuel.</string>
+    <string name="la_perms_nearby_devices_title">Appareils à proximité</string>
+    <string name="la_perms_nearby_devices_description">Requise pour découvrir d\'autres appareils via UPnP et Chromecast.</string>
+    <string name="search_title_empty_response">Aucun résultat.</string>
+    <string name="search_description_empty_response">Nous avons vérifié la réponse de votre serveur, mais elle était vide.</string>
 </resources>

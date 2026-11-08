@@ -2,12 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:name="App"
@@ -34,9 +39,15 @@
             android:name="androidx.car.app.TintableAttributionIcon"
             android:resource="@drawable/ic_graphic_eq" />
 
+        <activity android:name=".lan.LanPlaybackActivity" android:exported="false"
+            android:theme="@style/AppTheme" />
+        <service android:name=".lan.LanReceiverService" android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,11 +61,17 @@
 
                 <data
                     android:host="asset"
-                    android:scheme="tempo" />
+                    android:scheme="tempus" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".ui.activity.CrashActivity"
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/AppTheme"
+            android:exported="true"/>
+
+        <activity
+            android:name=".ui.crash.CrashActivity"
             android:label="@string/ca_info_title"
             android:process=":error_activity" />
 

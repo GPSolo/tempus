@@ -24,11 +24,13 @@
         <item>Alta</item>
         <item>Mitjana</item>
         <item>Baixa</item>
+        <item>Extra alta (1 GiB)</item>
     </string-array>
     <string-array name="pref_cache_size_values">
         <item>500</item>
         <item>250</item>
         <item>125</item>
+        <item>1024</item>
     </string-array>
 
     <string-array name="pref_image_size_titles">
@@ -48,6 +50,8 @@
         <item>256 MiB</item>
         <item>512 MiB</item>
         <item>1024 MiB</item>
+        <item>2048 MiB</item>
+        <item>4096 MiB</item>
     </string-array>
     <string-array name="streaming_cache_size_values">
         <item>0</item>
@@ -55,6 +59,8 @@
         <item>256</item>
         <item>512</item>
         <item>1024</item>
+        <item>2048</item>
+        <item>4096</item>
     </string-array>
 
     <string-array name="max_bitrate_wifi_list_titles">
@@ -189,17 +195,6 @@
         <item>flac</item>
     </string-array>
 
-    <string-array name="queue_syncing_countdown_titles">
-        <item>10 segons</item>
-        <item>5 segons</item>
-        <item>2 segons</item>
-    </string-array>
-    <string-array name="queue_syncing_countdown_values">
-        <item>10</item>
-        <item>5</item>
-        <item>2</item>
-    </string-array>
-
     <string-array name="rounded_corner_size_titles">
         <item>Alta</item>
         <item>Mitjana</item>
@@ -316,11 +311,13 @@
         <item>Per defecte</item>
         <item>Incorporat</item>
         <item>Extern</item>
+        <item>Parametric (AutoEq)</item>
     </string-array>
     <string-array name="selected_equalizer_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <string-array name="aa_tab_titles">

@@ -1,22 +1,22 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = 'com.cappielloantonio.tempo'
+    namespace = 'com.eddyizm.tempus'
     //noinspection GradleDependency
-    compileSdk = 36
-    buildToolsVersion = '36.0.0'
+    compileSdk = 37
+    buildToolsVersion = '36.1.0'
 
     defaultConfig {
         minSdkVersion 24
         //noinspection OldTargetApi
-        targetSdk = 36
+        targetSdk = 37
 
-        versionCode 41
-        versionName '4.23.2'
+        versionCode 52
+        versionName '4.31.0'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         javaCompileOptions {
@@ -61,6 +61,11 @@ android {
             dimension = "default"
             applicationId = "com.eddyizm.degoogled.tempus"
         }
+
+        play {
+            dimension = "default"
+            applicationId = "com.eddyizm.play.tempus"
+        }
     }
 
     buildTypes {
@@ -80,27 +85,38 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
+    }
+
+    lint {
+        baseline = file("lint-baseline.xml")
+        disable += "MissingTranslation"
+    }
+
+    sourceSets {
+        play {
+            java.srcDirs += ['src/tempus/java']
+            kotlin.srcDirs += ['src/tempus/java']
+            res.srcDirs += ['src/tempus/res']
+        }
     }
 }
 
 // After installing a debug build, seed the saved server/login from debug-server.properties
 // (see scripts/seed-debug-login.sh) so a fresh install skips the login screen.
-android.applicationVariants.all { variant ->
-    if (variant.buildType.name == 'debug') {
-        def installTask = tasks.findByName("install${variant.name.capitalize()}")
-        if (installTask != null) {
-            installTask.doLast {
-                def pb = new ProcessBuilder(
-                    rootProject.file('scripts/seed-debug-login.sh').absolutePath,
-                    variant.flavorName.toLowerCase()
-                )
-                pb.redirectErrorStream(true)
-                def proc = pb.start()
-                proc.inputStream.text.eachLine { line -> logger.lifecycle(line) }
-                def code = proc.waitFor()
-                if (code != 0) {
-                    throw new GradleException("seed-debug-login.sh failed with exit code $code")
-                }
+tasks.configureEach { task ->
+    if (task.name in ['installTempusDebug', 'installDegoogledDebug', 'installPlayDebug']) {
+        task.doLast {
+            def pb = new ProcessBuilder(
+                rootProject.file('scripts/seed-debug-login.sh').absolutePath,
+                task.name.substring('install'.length(), task.name.length() - 'Debug'.length()).toLowerCase()
+            )
+            pb.redirectErrorStream(true)
+            def proc = pb.start()
+            proc.inputStream.text.eachLine { line -> logger.lifecycle(line) }
+            def code = proc.waitFor()
+            if (code != 0) {
+                throw new GradleException("seed-debug-login.sh failed with exit code $code")
             }
         }
     }
@@ -111,8 +127,12 @@ dependencies {
 
     // AndroidX
     implementation libs.androidx.activity
+    implementation libs.androidx.activity.ktx
+    implementation libs.androidx.annotation
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.coordinatorlayout
+    implementation libs.androidx.lifecycle.livedata.ktx
+    implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.androidx.preference.ktx
     implementation libs.androidx.navigation.fragment.ktx
     implementation libs.androidx.navigation.ui.ktx
@@ -122,12 +142,25 @@ dependencies {
     implementation libs.androidx.appcompat
     implementation libs.androidx.swiperefreshlayout
 
+    // Compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.compose.runtime
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.graphics
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.compose.foundation
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.runtime.livedata
+    implementation libs.reorderable
+    debugImplementation libs.androidx.compose.ui.tooling
+
     // Android Material
     implementation libs.material
 
     // Glide
     implementation libs.glide
     implementation libs.glide.annotations
+    implementation libs.glide.compose
     annotationProcessor libs.glide.compiler
 
     // Media3
@@ -136,7 +169,13 @@ dependencies {
     implementation libs.media3.exoplayer
     implementation libs.media3.ui
     implementation libs.media3.exoplayer.hls
+    implementation libs.media3.datasource.okhttp
     tempusImplementation libs.media3.cast
+    playImplementation libs.media3.cast
+
+    // Route picker. Pulled in transitively by the Cast SDK for the tempus flavor
+    // already; declared here at the same version so the degoogled flavor has it too.
+    implementation libs.mediarouter
 
     // Room Compiler
     annotationProcessor libs.androidx.room.compiler
@@ -156,6 +195,7 @@ dependencies {
         }
     }
     implementation libs.kotlin.metadata
+    implementation(libs.colorpickerview)
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.12.0'

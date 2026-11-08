@@ -14,11 +14,13 @@
         <item>높음</item>
         <item>중간</item>
         <item>낮음</item>
+        <item>매우 높음 (1 GiB)</item>
     </string-array>
     <string-array name="pref_cache_size_values">
         <item>500</item>
         <item>250</item>
         <item>125</item>
+        <item>1024</item>
     </string-array>
 
     <string-array name="pref_image_size_titles">
@@ -162,17 +164,6 @@
         <item>aac</item>
         <item>mp3</item>
         <item>flac</item>
-    </string-array>
-
-    <string-array name="queue_syncing_countdown_titles">
-        <item>10초</item>
-        <item>5초</item>
-        <item>2초</item>
-    </string-array>
-    <string-array name="queue_syncing_countdown_values">
-        <item>10</item>
-        <item>5</item>
-        <item>2</item>
     </string-array>
 
     <string-array name="rounded_corner_size_titles">

@@ -143,6 +143,8 @@
     </plurals>
     <string name="home_title_best_of">Cel mai bun</string>
     <string name="home_title_discovery">Descoperire</string>
+    <string name="home_title_continue_listening">Continuă ascultarea</string>
+    <string name="home_continue_listening_resume_at">Continuă la %1$s</string>
     <string name="home_title_discovery_shuffle_all_button">Amestecare toate</string>
     <string name="home_title_flashback">Retrospectivă</string>
     <string name="home_title_internet_radio_station">Stații radio internet</string>
@@ -186,7 +188,6 @@
     <string name="login_title">Servere Subsonic</string>
     <string name="login_title_expanded">Servere Subsonic</string>
     <string name="media_route_menu_title">Cast</string>
-    <string name="menu_add_button">Adăugaţi</string>
     <string name="menu_add_to_playlist_button">Adăugați la playlist</string>
     <string name="menu_download_all_button">Descărcați tot</string>
     <string name="menu_rate_album">Evaluați albumul</string>
@@ -290,17 +291,6 @@
     <string name="search_title_album">Albume</string>
     <string name="search_title_artist">Artiști</string>
     <string name="search_title_song">Cântece</string>
-    <string name="server_signup_dialog_action_low_security">Securitate redusă</string>
-    <string name="server_signup_dialog_action_delete_toast">Apasă lung pentru a șterge</string>
-    <string name="server_signup_dialog_hint_local_address">URL Local</string>
-    <string name="server_signup_dialog_hint_name">Nume Server</string>
-    <string name="server_signup_dialog_hint_password">Parolă</string>
-    <string name="server_signup_dialog_hint_url">URL Server</string>
-    <string name="server_signup_dialog_hint_username">Nume Utilizator</string>
-    <string name="server_signup_dialog_negative_button">Anulati</string>
-    <string name="server_signup_dialog_neutral_button">Ștergeţi</string>
-    <string name="server_signup_dialog_positive_button">Salvaţi</string>
-    <string name="server_signup_dialog_title">Adăugați server</string>
     <string name="server_unreachable_dialog_negative_button">Anulati</string>
     <string name="server_unreachable_dialog_neutral_button">Mergeți la conectare</string>
     <string name="server_unreachable_dialog_positive_button">Continuaţi oricum</string>
@@ -364,7 +354,6 @@
     <string name="settings_song_rating_summary">Dacă este activat, afișează evaluarea cu 5 stele pentru piesă pe pagina cântecului\n\n*Necesită restartarea aplicației</string>
     <string name="settings_item_rating">Arătați evaluarea articolului</string>
     <string name="settings_item_rating_summary">Dacă este activat, va fi afișată evaluarea articolului și dacă este marcat ca favorit.</string>
-    <string name="settings_queue_syncing_countdown">Cronometru sincronizare</string>
     <string name="settings_queue_syncing_summary">Dacă este activat, utilizatorul va avea capacitatea de a-și salva coada de redare și va putea să încărce starea la deschiderea aplicației.</string>
     <string name="settings_queue_syncing_title">Sincronizare coadă de redare pentru acest utilizator [Nu este complet finalizat]</string>
     <string name="settings_show_mini_shuffle_button">Arătați butonul Amestecare</string>
@@ -550,4 +539,36 @@
 
     <string name="search_sort_title">Sortaţi căutările recente cronologic</string>
     <string name="search_sort_summary">Dacă este activat, sortează căutările cronologic. Sortează după nume dacă este dezactivat.</string>
+    <string name="playlist_chooser_dialog_visibility_summary_v2">Activarea acestei opțiuni face lista de redare publică. Dacă este lăsată așa cum este, vizibilitatea listei de redare nu se va schimba.</string>
+    <string name="playlist_editor_dialog_action_save_empty">O listă de redare trebuie să conțină cel puțin o piesă</string>
+    <string name="search_title_empty_response">Niciun rezultat.</string>
+    <string name="search_description_empty_response">Am verificat răspunsul serverului, dar era gol.</string>
+    <string name="menu_keep_synced_button">Păstrează sincronizarea</string>
+    <plurals name="playlist_sync_downloading">
+        <item quantity="one">Se descarcă %d piesă</item>
+        <item quantity="few">Se descarcă %d piese</item>
+        <item quantity="other">Se descarcă %d piese</item>
+    </plurals>
+    <string name="playlist_editor_hint">Trageți de mâner pentru a reordona și atingeți coșul de gunoi pentru a elimina. Nimic nu se trimite până la salvare.</string>
+    <string name="playlist_editor_remove_track">Elimină piesa</string>
+    <string name="playlist_editor_drag_track">Trage pentru a reordona</string>
+    <string name="menu_edit_playlist_details_button">Editează detaliile</string>
+    <string name="playlist_details_dialog_title">Detaliile playlistului</string>
+    <string name="playlist_editor_load_failure">Playlistul nu a putut fi încărcat</string>
+    <string name="playlist_editor_removed_track">Eliminată din listă</string>
+    <string name="song_bottom_sheet_undo">Anulează</string>
+    <string name="song_bottom_sheet_undo_failure">Nu s-a putut restaura melodia</string>
+    <string name="la_theme_card_emerald_green_description">Culoare de accent verde smarald</string>
+    <string name="la_perms_title">Solicită permisiuni</string>
+    <string name="la_perms_description">Permisiunile necesare și utilizarea acestora sunt afișate mai jos.</string>
+    <string name="la_perms_status_provided">Acordată</string>
+    <string name="la_perms_status_not_provided">Solicită</string>
+    <string name="la_perms_internet_title">Internet</string>
+    <string name="la_perms_internet_description">Necesară pentru a accesa serverul tău de muzică prin internet.</string>
+    <string name="la_perms_notifications_title">Notificări</string>
+    <string name="la_perms_notifications_description">Necesară pentru a afișa starea descărcărilor și comenzile playerului.</string>
+    <string name="la_perms_access_local_network_title">Acces la rețeaua locală</string>
+    <string name="la_perms_access_local_network_description">Necesar pentru a accesa alte dispozitive din aceeași rețea LAN ca dispozitivul actual.</string>
+    <string name="la_perms_nearby_devices_title">Dispozitive din apropiere</string>
+    <string name="la_perms_nearby_devices_description">Necesară pentru a descoperi alte dispozitive prin UPnP și Chromecast.</string>
 </resources>
